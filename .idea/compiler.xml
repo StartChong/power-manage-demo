@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="power-web" />
+        <module name="power-api" />
+        <module name="maven-esayui-test" />
+        <module name="maven-supermarket-manage-springmvc" />
+        <module name="power-service" />
+        <module name="power-dao" />
+        <module name="power-commons" />
+        <module name="power-entity" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="maven-car-test" target="1.8" />
+      <module name="maven-esayui-test" target="1.8" />
+      <module name="maven-power-parent" target="1.8" />
+      <module name="maven-supermarket-manage-springmvc" target="1.8" />
+      <module name="power-api" target="1.8" />
+      <module name="power-commons" target="1.8" />
+      <module name="power-dao" target="1.8" />
+      <module name="power-entity" target="1.8" />
+      <module name="power-manager" target="1.8" />
+      <module name="power-service" target="1.8" />
+      <module name="power-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

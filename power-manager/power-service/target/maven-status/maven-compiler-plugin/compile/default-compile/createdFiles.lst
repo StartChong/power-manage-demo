@@ -1,0 +1,5 @@
+cn\icloudit\permission\service\impl\AuthFunctionServiceImpl.class
+cn\icloudit\permission\service\impl\UserRoleServiceServiceImpl.class
+cn\icloudit\permission\service\impl\RoleFunctionServiceImpl.class
+cn\icloudit\permission\service\impl\AuthRoleServiceImpl.class
+cn\icloudit\permission\service\impl\UserServiceImpl.class

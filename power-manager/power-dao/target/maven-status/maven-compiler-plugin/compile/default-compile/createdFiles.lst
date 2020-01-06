@@ -1,0 +1,5 @@
+cn\icloudit\permission\mapper\AuthFunctionMapper.class
+cn\icloudit\permission\mapper\UserMapper.class
+cn\icloudit\permission\mapper\UserRoleMapper.class
+cn\icloudit\permission\mapper\AuthRoleMapper.class
+cn\icloudit\permission\mapper\RoleFunctionMapper.class

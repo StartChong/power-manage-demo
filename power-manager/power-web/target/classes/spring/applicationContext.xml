@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+ http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <context:property-placeholder location="classpath:db/database.properties"></context:property-placeholder>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${user}" />
+        <property name="password" value="${password}" />
+    </bean>
+
+    <!-- 配置SqlSessionFactoryBean -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 引用数据源组件 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 引用MyBatis配置文件中的配置 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+    </bean>
+    <!-- 配置DAO -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="cn.icloudit.permission.mapper" />
+    </bean>
+
+    <context:component-scan base-package="cn.icloudit.permission.service" />
+
+    <!-- 定义事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" propagation="SUPPORTS" />
+            <tx:method name="get*" propagation="SUPPORTS" />
+            <tx:method name="query*" propagation="SUPPORTS" />
+            <tx:method name="login" propagation="SUPPORTS" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="del*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+    <!-- 定义切面 -->
+    <aop:config>
+        <aop:pointcut id="serviceMethod"
+                      expression="execution(* cn.icloudit.permission.service..*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+    </aop:config>
+</beans>

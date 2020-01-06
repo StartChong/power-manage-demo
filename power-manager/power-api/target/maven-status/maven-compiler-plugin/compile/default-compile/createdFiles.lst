@@ -1,0 +1,6 @@
+cn\icloudit\permisson\service\IBaseService.class
+cn\icloudit\permisson\service\IAuthFuctionService.class
+cn\icloudit\permisson\service\IUserRoleService.class
+cn\icloudit\permisson\service\IRoleFunctionService.class
+cn\icloudit\permisson\service\IAuthRoleService.class
+cn\icloudit\permisson\service\IUserService.class

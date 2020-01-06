@@ -1,0 +1,8 @@
+cn\icloudit\permission\web\controller\RoleFunctionController.class
+cn\icloudit\permission\web\controller\IndexController.class
+cn\icloudit\permission\web\controller\UserRoleController.class
+cn\icloudit\permission\web\controller\AuthFunctionController.class
+cn\icloudit\permission\web\controller\AuthRoleController.class
+cn\icloudit\permission\web\interceptor\MyInterceptor.class
+cn\icloudit\permission\web\convert\DateConvert.class
+cn\icloudit\permission\web\controller\UserController.class

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="power-web:war">
+    <output-path>$PROJECT_DIR$/power-manager/power-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>power-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="power-web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="power-web:war exploded" />
+    </root>
+  </artifact>
+</component>

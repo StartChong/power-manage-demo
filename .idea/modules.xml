@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../maven-easyui-test/maven-esayui-test.iml" filepath="$PROJECT_DIR$/../maven-easyui-test/maven-esayui-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maven-power-parent.iml" filepath="$PROJECT_DIR$/maven-power-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../maven-supermarket-manage-springmvc/maven-supermarket-manage-springmvc.iml" filepath="$PROJECT_DIR$/../maven-supermarket-manage-springmvc/maven-supermarket-manage-springmvc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/power-manager/power-api/power-api.iml" filepath="$PROJECT_DIR$/power-manager/power-api/power-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/power-commons/power-commons.iml" filepath="$PROJECT_DIR$/power-commons/power-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/power-manager/power-dao/power-dao.iml" filepath="$PROJECT_DIR$/power-manager/power-dao/power-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/power-manager/power-entity/power-entity.iml" filepath="$PROJECT_DIR$/power-manager/power-entity/power-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/power-manager/power-manager.iml" filepath="$PROJECT_DIR$/power-manager/power-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/power-manager/power-service/power-service.iml" filepath="$PROJECT_DIR$/power-manager/power-service/power-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/power-manager/power-web/power-web.iml" filepath="$PROJECT_DIR$/power-manager/power-web/power-web.iml" />
+    </modules>
+  </component>
+</project>

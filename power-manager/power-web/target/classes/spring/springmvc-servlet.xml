@@ -1,0 +1,68 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+   http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/mvc
+   http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:component-scan base-package="cn.icloudit.permission.web.controller" />
+
+    <!-- 1.启动SpringMVC注解 -->
+    <!-- 显示的装配自定义类型转换器 -->
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <!-- 优先使用该媒体类型,为了解决IE浏览器下,返回JSON数据的下载问题 -->
+                        <value>text/html;charset=UTF-8</value>
+                        <value>text/json;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!-- 自定义类型转换器配置-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="cn.icloudit.permission.web.convert.DateConvert" />
+<!--                <bean class="cn.icloudit.permission.web.convert.DateFormat" />-->
+            </set>
+        </property>
+    </bean>
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+        <bean class="cn.icloudit.permission.web.interceptor.MyInterceptor"></bean>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login"/>
+            <bean class="cn.icloudit.permission.web.interceptor.MyInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+<!--    &lt;!&ndash;配置文件上传参数&ndash;&gt;-->
+<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >-->
+<!--        <property name="defaultEncoding" value="utf-8"/>-->
+<!--        <property name="maxUploadSize" value="10485760000"/>-->
+<!--        <property name="maxInMemorySize" value="40960" />-->
+<!--    </bean>-->
+    <!--若web.xml配置*.do改为了/解开下面注释和添加相应的文件-->
+<!--    <mvc:resources mapping="/upload/**" location="/upload/"/>-->
+<!--    <mvc:resources mapping="/js/**" location="/static/js/"/>-->
+<!--    <mvc:resources mapping="/css/**" location="/static/css/"/>-->
+</beans>
