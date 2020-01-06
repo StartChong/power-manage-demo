@@ -7,6 +7,7 @@ import cn.icloudit.permisson.service.IAuthRoleService;
 import cn.icloudit.permisson.service.IRoleFunctionService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +44,7 @@ public class AuthRoleController {
 
     @RequestMapping("/add/{ids}")
     @ResponseBody
+    @RequiresPermissions("role.add")
     public String add(@PathVariable("ids") Integer[] ids, AuthRole AuthRole){
         authRoleService.saveAndFunction(AuthRole,ids);
         return "";

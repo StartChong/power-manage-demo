@@ -9,6 +9,11 @@ import cn.icloudit.permisson.service.IAuthRoleService;
 import cn.icloudit.permisson.service.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,18 +44,40 @@ public class UserController {
         if (checkcode != null && !"".equals(checkcode)){
             String code = (String)session.getAttribute("regcode");
             if (checkcode.equals(code)){
-                List<User> list = userService.queryByTj(user);
-                if (list.size() > 0){
-                    session.setAttribute("LOGIN_USER",list.get(0));
-                    return  "system/main";
-                } else {
+//                List<User> list = userService.queryByTj(user);
+//                if (list.size() > 0){
+//                    session.setAttribute("LOGIN_USER",list.get(0));
+//                    return  "system/main";
+//                } else {
+//                    model.addAttribute("msg","账号或密码错误！");
+//                    return "forward:/login.jsp";
+//                }
+                Subject subject = SecurityUtils.getSubject();
+                AuthenticationToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
+                try {
+                    subject.login(token);
+                } catch (Exception e){
+                    e.printStackTrace();
                     model.addAttribute("msg","账号或密码错误！");
-                    return "forward:/login.jsp";
+                    return "redirect:/login.jsp";
                 }
+                User user1 = (User)subject.getPrincipal();
+                session.setAttribute("LOGIN_USER",user1);
+                return "system/main";
+            } else {
+                model.addAttribute("msg","验证码输入错误，请重新输入验证码！");
+                return "redirect:/login.jsp";
             }
         }
         model.addAttribute("msg","请输入验证码！");
-        return "forward:/login.jsp";
+        return "redirect:/login.jsp";
+    }
+
+    @RequestMapping("/loginOut")
+    public String loginOut(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:/login.jsp";
     }
 
     @RequestMapping("/queryByPager")

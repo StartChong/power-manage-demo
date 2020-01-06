@@ -13,9 +13,11 @@
     http://www.springframework.org/schema/aop
     http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-
+    <!-- 自动扫描 -->
     <context:property-placeholder location="classpath:db/database.properties"></context:property-placeholder>
+    <context:component-scan base-package="cn.icloudit.permission.service" />
 
+    <!-- 配置数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${driver}" />
@@ -31,18 +33,18 @@
         <!-- 引用MyBatis配置文件中的配置 -->
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
     </bean>
-    <!-- 配置DAO -->
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <property name="basePackage" value="cn.icloudit.permission.mapper" />
     </bean>
 
-    <context:component-scan base-package="cn.icloudit.permission.service" />
 
     <!-- 定义事务管理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
+    <!-- 配置事务通知属性 -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="find*" propagation="SUPPORTS" />
@@ -55,10 +57,57 @@
             <tx:method name="*" propagation="REQUIRED" />
         </tx:attributes>
     </tx:advice>
-    <!-- 定义切面 -->
+    <!-- 配置事务切面 -->
     <aop:config>
         <aop:pointcut id="serviceMethod"
                       expression="execution(* cn.icloudit.permission.service..*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
     </aop:config>
+
+    <!-- 自定义Realm -->
+    <bean id="myRealm" class="cn.icloudit.permission.realm.UserRealm"/>
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+    </bean>
+    <!-- Shiro过滤器工厂 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- Shiro的核心安全接口,这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 身份认证成功，则跳转到登录页面的配置 -->
+        <property name="successUrl" value="/index/system/main.do"/>
+        <!-- 身份认证失败，则跳转到登录页面的配置 -->
+        <property name="loginUrl" value="/login.jsp"/>
+        <!-- 权限认证失败，则跳转到指定页面 -->
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <!-- Shiro连接约束配置,即过滤链的定义 -->
+        <property name="filterChainDefinitions">
+            <value>
+                /client/**=anon
+                /easyui/**=anon
+                /zTree/**=anon
+                /login.jsp=anon
+                /user/login.do=anon
+                /index/system/staff.do=perms["user:list"]
+                /user/add.do=perms["user:add"]
+                /user/update.do=perms["user:update"]
+                /user/delete.do=perms["user:delete"]
+                /index/system/role.do=perms["role:list"]
+                /index/system/function.do=perms["menu:list"]
+                /*=authc
+            </value>
+        </property>
+    </bean>
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <!-- 开启Shiro注解 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <!--必须使用cglib方式为Action对象创建代理对象-->
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+    <!--配置shiro框架切面类，用于创建代理对象-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
 </beans>

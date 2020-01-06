@@ -44,7 +44,7 @@
                     </div>
                     <div class="icon-man">
                         <img id="loginform-vCode" class="show-hide-column-image" src="${pageContext.request.contextPath}/client/verificationCode.jsp"
-                             onclick="javascript:document.getElementById('loginform-vCode').src='client/verificationCode.jsp?'+Math.random();">
+                             onclick="javascript:document.getElementById('loginform-vCode').src='${pageContext.request.contextPath}/client/verificationCode.jsp?'+Math.random();">
                     </div>
                     <div class="mb2"><a class="act-but submit" href="javascript:toSubmit();" style="color: #FFFFFF">登录</a></div>
                 </form>

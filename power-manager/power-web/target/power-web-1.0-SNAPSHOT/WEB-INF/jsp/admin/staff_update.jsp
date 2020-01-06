@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -66,7 +65,7 @@
             <td>选择角色</td>
             <td colspan="3">
                 <c:forEach items="${roleList}" var="role">
-                    <input type="checkbox" name="roleIds" value="${role.role_id}" ${roleIds.contains("" + role.role_id)?"checked":""}>${role.name}
+                    <input type="checkbox" name="roleIds" value="${role.role_id}" ${roleIds.contains(role.role_id.toString())?"checked":""}>${role.name}
                 </c:forEach>
             </td>
         </tr>

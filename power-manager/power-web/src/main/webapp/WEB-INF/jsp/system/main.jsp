@@ -87,6 +87,7 @@
 <body class="easyui-layout">
     <div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">
         当前用户：${LOGIN_USER.username}
+        <a href="${pageContext.request.contextPath}/user/loginOut.do">退出</a>
     </div>
     <div data-options="region:'west',split:true,title:'菜单导航'" style="width:150px;padding:10px;">
         <div class="easyui-accordion" data-options="fit:true,border:false">

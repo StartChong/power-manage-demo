@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          isELIgnored="false" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -21,6 +22,7 @@
         $(function(){
             $("#grid").datagrid({
                 toolbar : [
+                    <shiro:hasPermission name="role.add">
                     {
                         id : 'add',
                         text : '添加角色',
@@ -29,6 +31,7 @@
                             location.href='${pageContext.request.contextPath}/index/admin/role_add.do';
                         }
                     },
+                    </shiro:hasPermission>
                     {
                         id : 'delete',
                         text : '删除角色',
