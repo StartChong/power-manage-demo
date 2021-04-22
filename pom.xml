@@ -30,7 +30,7 @@
         <jsp.version>2.2</jsp.version>
         <mysql.version>8.0.16</mysql.version>
         <jackson.version>2.9.10</jackson.version>
-        <mybatis.version>3.5.2</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <spring-mybatis.version>2.0.2</spring-mybatis.version>
         <dbcp2.version>2.7.0</dbcp2.version>
         <aopalliance.version>1.0</aopalliance.version>
